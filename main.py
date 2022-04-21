@@ -101,11 +101,12 @@ def add_object():
                             category_of_significance=form.category_of_significance.data,
                             type_of_object=form.type_of_object.data,
                             picture_src=form.picture_src.data,
+                            creator_id=current_user.id,
                             is_unesco=form.is_unesco.data, **get_object_coords_region(form.address.data))
         except AddressError as error:
             return render_template('object_add_edit.html', title='Добавление объекта',
                                    form=form, message=error)
-        current_user.objects.append(object)
+        db_sess.add(object)
         db_sess.merge(current_user)
         db_sess.commit()
         return redirect('/')
@@ -145,6 +146,7 @@ def edit_object(id):
             object.latitude = geodata["latitude"]
             object.region = geodata["region"]
             object.picture_src = form.picture_src.data
+            object.creator_id = current_user.id
         except AddressError as error:
             return render_template('news.html',
                                    title='Редактирование новости',
