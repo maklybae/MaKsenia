@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.exceptions import abort
@@ -202,7 +204,8 @@ def object(id):
 
 def main():
     db_session.global_init("database/main_db.db")
-    app.run(port=PORT, host=HOST)
+    port = int(os.environ.get("PORT", PORT))
+    app.run(host=HOST, port=port)
 
 
 if __name__ == '__main__':
