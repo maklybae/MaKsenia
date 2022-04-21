@@ -49,6 +49,15 @@
             </p>
         {% endfor %}
     </p>
+    <p>
+        {{ form.picture_src.label }}<br>
+        {{ form.picture_src(class="form-control") }}<br>
+        {% for error in form.picture_src.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
     <p>{{ form.is_unesco() }} {{ form.is_unesco.label }}</p>
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     {{message}}

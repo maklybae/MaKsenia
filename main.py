@@ -100,6 +100,7 @@ def add_object():
                             address=form.address.data,
                             category_of_significance=form.category_of_significance.data,
                             type_of_object=form.type_of_object.data,
+                            picture_src=form.picture_src.data,
                             is_unesco=form.is_unesco.data, **get_object_coords_region(form.address.data))
         except AddressError as error:
             return render_template('object_add_edit.html', title='Добавление объекта',
@@ -114,7 +115,7 @@ def add_object():
 
 @app.route('/editobject/<int:id>', methods=['GET', 'POST'])
 @login_required
-def edit_news(id):
+def edit_object(id):
     form = ObjectAddEditForm()
     if request.method == "GET":
         db_sess = db_session.create_session()
@@ -126,6 +127,7 @@ def edit_news(id):
             form.category_of_significance.data = object.category_of_significance
             form.type_of_object.data = object.type_of_object
             form.is_unesco.data = object.is_unesco
+            form.picture_src.data = object.picture_src
         else:
             abort(404)
     if form.validate_on_submit():
@@ -142,6 +144,7 @@ def edit_news(id):
             object.longitude = geodata["longitude"]
             object.latitude = geodata["latitude"]
             object.region = geodata["region"]
+            object.picture_src = form.picture_src.data
         except AddressError as error:
             return render_template('news.html',
                                    title='Редактирование новости',
@@ -158,7 +161,7 @@ def edit_news(id):
 
 @app.route('/deleteobject/<int:id>', methods=['GET', 'POST'])
 @login_required
-def news_delete(id):
+def object_delete(id):
     db_sess = db_session.create_session()
     object = db_sess.query(Object).filter(Object.id == id).first()
     if object:

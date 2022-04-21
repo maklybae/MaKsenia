@@ -18,6 +18,7 @@ class Object(SqlAlchemyBase):
     category_of_significance = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     type_of_object = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     is_unesco = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
+    picture_src = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     created_date = sqlalchemy.Column(sqlalchemy.DateTime,
                                      default=datetime.datetime.now)
     creator_id = sqlalchemy.Column(sqlalchemy.Integer,

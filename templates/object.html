@@ -43,6 +43,10 @@
         <th scope="row">Изображение на карте</th>
         <td><img src="{{img_src}}"></td>
     </tr>
+    <tr>
+        <th scope="row">Прикрепленное изображение</th>
+        <td><img src="{{object.picture_src}}"></td>
+    </tr>
 </table>
 <div>
     {% if current_user.is_authenticated and current_user.is_admin %}
