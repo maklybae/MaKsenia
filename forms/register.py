@@ -10,4 +10,4 @@ class RegisterForm(FlaskForm):
     first_name = StringField('Имя', validators=[DataRequired()])
     surname = StringField('Фамилия', validators=[DataRequired()])
     admin_key = StringField('Ключ администратора')
-    submit = SubmitField('Войти')
+    submit = SubmitField('Зарегистрироваться')

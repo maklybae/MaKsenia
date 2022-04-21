@@ -67,7 +67,7 @@ def register():
             return render_template('register.html', title='Регистрация',
                                    form=form,
                                    message="Пароли не совпадают")
-        if form.admin_key.data != ADMIN_KEY:
+        if form.admin_key.data and form.admin_key.data != ADMIN_KEY:
             return render_template('register.html', title='Регистрация',
                                    form=form,
                                    message="Неверный ключ администратора")
