@@ -204,8 +204,8 @@ def object(id):
 
 def main():
     db_session.global_init("database/main_db.db")
-    port = int(os.environ.get("PORT", PORT))
-    app.run(host=HOST, port=port)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
 
 
 if __name__ == '__main__':
