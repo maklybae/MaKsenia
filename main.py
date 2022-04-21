@@ -31,7 +31,7 @@ def load_user(user_id):
 @app.route("/")
 def index():
     db_sess = db_session.create_session()
-    request = db_sess.query(Object).all()
+    request = db_sess.query(Object).order_by(Object.id.desc()).all()
     return render_template("index.html", objects=request, title='Объекты культурного наследия')
 
 
