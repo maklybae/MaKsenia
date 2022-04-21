@@ -1,0 +1,2 @@
+class AddressError(ValueError):
+    pass

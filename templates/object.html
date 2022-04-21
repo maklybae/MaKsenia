@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{title}}</h1>
+<table class="table table-striped">
+    <tr>
+        <th scope="row">Объект</th>
+        <td>{{object.object}}</td>
+    </tr>
+    <tr>
+        <th scope="row" title="Согласно Единому государственному реестру культурного наследия народов РФ">Номер в реестре</th>
+        <td>{{object.registry_number}}</td>
+    </tr>
+    <tr>
+        <th scope="row">Полный адрес</th>
+        <td>{{object.address}}</td>
+    </tr>
+    <tr>
+        <th scope="row">Долгота</th>
+        <td>{{object.longitude}}</td>
+    </tr>
+    <tr>
+        <th scope="row">Широта</th>
+        <td>{{object.latitude}}</td>
+    </tr>
+    <tr>
+        <th scope="row">Регион</th>
+        <td>{{object.region}}</td>
+    </tr>
+    <tr>
+        <th scope="row">Категория историко-культурного значения</th>
+        <td>{{object.category_of_significance}}</td>
+    </tr>
+    <tr>
+        <th scope="row">Вид объекта</th>
+        <td>{{object.type_of_object}}</td>
+    </tr>
+    <tr>
+        <th scope="row">Принадлежность к Юнеско</th>
+        <td>{% if object.is_unesco %} да {%else%} нет {%endif%}</td>
+    </tr>
+    <tr>
+        <th scope="row">Изображение на карте</th>
+        <td><img src="{{img_src}}"></td>
+    </tr>
+</table>
+<div>
+    {% if current_user.is_authenticated and current_user.is_admin %}
+        <div>
+            <a href="/editobject/{{ object.id }}" class="btn btn-warning">
+                Изменить
+            </a>
+            <a href="/deleteobject/{{ object.id }}" class="btn btn-danger">
+                Удалить
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% if current_user.is_authenticated %}
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.content.label }}<br>
+        {{ form.content(class="form-control") }}<br>
+        {% for error in form.content.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    {{message}}
+</form>
+{% else %}
+<div class="container">
+    Чтобы отсавить комментарий необходимо авторизоваться
+</div>
+{% endif %}
+{%for comment in comments%}
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="card card-white post">
+                <div class="post-heading">
+                    <div class="float-left meta">
+                        <div class="title h5">
+                            <b>{{comment.user.first_name}} {{comment.user.surname}}</b>
+                            опубликовал(а) комментарий.
+                        </div>
+                        <h6 class="text-muted time">{{comment.date}}</h6>
+                    </div>
+                </div>
+                <div class="post-description">
+                    <p>{{comment.content}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

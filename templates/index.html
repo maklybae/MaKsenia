@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Добавленные объекты культурного наследия</h1>
+{% if current_user.is_authenticated and current_user.is_admin %}
+    <a href="addobject" class="btn btn-secondary">Добавить объект</a>
+{% endif %}
+{% for item in objects %}
+<div class="col-md6 border rounded">
+    <a href="object/{{item.id}}"><h2>{{item.object}}</h2></a>
+    <div>
+        {{item.type_of_object}}<br>
+        {{item.region}}: {{item.address}}
+    </div>
+    <div>
+        Опубликовано пользователем {{item.creator.first_name}} {{item.creator.surname}}, Дата публикации - {{item.created_date}}
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
